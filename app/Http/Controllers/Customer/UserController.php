@@ -43,7 +43,7 @@ class UserController extends Controller
 
         $tokenExpiresAt = now()->addWeek();
         $token = $userResource->createToken(
-            $userResource['email_address'], ['*'], $tokenExpiresAt
+            $userResource['email_address'], ['customer'], $tokenExpiresAt
         )->plainTextToken;
 
         return response()->json([
@@ -52,7 +52,7 @@ class UserController extends Controller
             'data' => [
                 'user' => $userResource,
                 'token' => $token,
-                'token_expires_at' => now()->addWeek()
+                'token_expires_at' => $tokenExpiresAt
             ]
         ]);
     }

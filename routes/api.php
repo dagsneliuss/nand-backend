@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Customer;
+use App\Http\Controllers\Administrator;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,5 +27,13 @@ Route::group(['prefix' => '/customer'], function() {
     Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::patch('/', [Customer\UserController::class, 'update']);
         Route::delete('/', [Customer\UserController::class, 'delete']);
+    });
+});
+
+Route::group(['prefix' => '/administrator'], function() {
+    Route::post('/login', [Administrator\UserController::class, 'login']);
+
+    Route::group(['middleware' => ['auth:sanctum', 'ability:administrator']], function () {
+
     });
 });
